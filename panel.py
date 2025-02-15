@@ -20,6 +20,7 @@ class Dot(pygame.sprite.Sprite):
 
         assert self.__posy >= 255, f"The Center of the Object must be >= 255. posy = {self.__posy}"
 
+
     def update(self, posy: int) -> None:
         self.rect.centery = posy
 
