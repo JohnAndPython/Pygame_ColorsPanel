@@ -15,9 +15,15 @@ class Dot(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(centerx=posx, centery=posy)
 
 
-    def update(self, posy: int, miny: int=0, maxy: int=250) -> None:
+    def update(self, posy: int, miny: int=0, maxy: int=255) -> None:
         self.rect.centery = posy
 
+        if self.rect.centery < miny:
+            self.rect.centery = miny
+        elif self.rect.centery > maxy:
+            self.rect.centery = maxy
+
+        print(self.rect.centery)
 
     def draw(self, root_surf: pygame.Surface) -> None:
         #self.image.fill((0, 0, 0, 0))
@@ -36,21 +42,25 @@ class slider(pygame.sprite.Sprite):
         self.posx = posx
         self.posy = posy
 
-        self.image = pygame.surface.Surface((30, 300), pygame.SRCALPHA)
+        self.offsetx = 10
+        self.offsety = 20
+        self.width = 20 
+        self.height = 256
+        self.dot = Dot(self.width // 2 + self.offsetx, self.height + self.offsety, size=15)
+
+        self.image = pygame.surface.Surface((self.width + self.offsetx * 2, 300), pygame.SRCALPHA)
         self.rect = self.image.get_rect(left=self.posx, top=self.posy)
         
-        self.offset = 5
-        self.width = 20
-        self.height = 256
-        self.dot = Dot(self.width // 2 + self.offset, self.height, size=15)
 
-    def update(self) -> None:
-        pass
+
+    def update(self, posy: int=256) -> None:
+        self.dot.update(posy, miny=self.offsety, maxy=self.height + self.offsety)
 
 
     def draw(self, root_surf: pygame.Surface) -> None:
-        
-        slider_rect = pygame.draw.rect(self.image, (200, 200, 200), (self.offset, self.offset, self.width, self.height), border_radius=10)
+        self.image.fill((0, 0, 0, 0))
+        pygame.draw.rect(self.image, (200, 200, 200), (self.offsetx, self.offsety, self.width, self.height), border_radius=10)
+        pygame.draw.rect(self.image, (0, 0, 0, 0), (self.offsetx + 4, self.offsety + 4, 12, self.height-8), border_radius=10)
         self.dot.draw(self.image)
 
         root_surf.blit(self.image, self.rect)
