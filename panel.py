@@ -30,6 +30,10 @@ class Dot(pygame.sprite.Sprite):
 
     def get_positiony(self) -> int:
         return self.cur_posy
+    
+
+    def get_dot_rect(self) -> pygame.Rect:
+        return self.rect
 
 
     def draw(self, root_surf: pygame.Surface) -> None:
@@ -76,6 +80,10 @@ class Slider(pygame.sprite.Sprite):
 
     def get_dot_positiony(self) -> int:
         return self.dot.get_positiony()
+    
+
+    def get_dot_rect(self) -> pygame.Rect:
+        return self.dot.get_dot_rect()
 
 
     def update(self, posy: int=256) -> None:
@@ -130,6 +138,10 @@ class Panel(pygame.sprite.Sprite):
 
     def get_dot_value(self, slider: Slider) -> int:
         return slider.get_dot_positiony()
+    
+
+    def get_dot_rect(self, slider: Slider) -> pygame.Rect:
+        return slider.get_dot_rect()
 
 
     def draw(self, root_surf: pygame.Surface) -> None:
