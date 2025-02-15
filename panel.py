@@ -39,7 +39,7 @@ class Dot(pygame.sprite.Sprite):
 
 
     def draw(self, root_surf: pygame.Surface) -> None:
-        self.image.fill((0, 0, 0, 0))
+        self.__image.fill((0, 0, 0, 0))
         pygame.draw.circle(self.__image, self.__color_outer, (self.__size + 5 // 2, self.__size + 5 // 2), self.__size)
         pygame.draw.circle(self.__image, (0, 0, 0), (self.__size + 5 // 2, self.__size + 5 // 2), self.__size, width=1)
         pygame.draw.circle(self.__image, self.__color_inner, (self.__size + 5 // 2, self.__size + 5 // 2), self.__size - 5)
