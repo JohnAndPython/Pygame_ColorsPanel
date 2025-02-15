@@ -14,22 +14,29 @@ class Dot(pygame.sprite.Sprite):
         self.image = pygame.surface.Surface((self.size * 2 + 5, self.size * 2 + 5), pygame.SRCALPHA)
         self.rect = self.image.get_rect(centerx=posx, centery=posy)
 
+        self.offset = self.rect.centery - 255
+        self.miny = self.offset
+        self.maxy = self.rect.centery
+
         assert self.posy >= 255, f"The Center of the Object must be >= 255. posy = {self.posy}"
 
-    def update(self, posy: int, miny: int=0, maxy: int=255) -> None:
+    def update(self, posy: int) -> None:
         self.rect.centery = posy
 
-        if self.rect.centery < miny:
-            self.rect.centery = miny
-        elif self.rect.centery > maxy:
-            self.rect.centery = maxy
+        if self.rect.centery < self.miny:
+            self.rect.centery = self.miny
+        elif self.rect.centery > self.maxy:
+            self.rect.centery = self.maxy
 
-        self.cur_posy = 255 - (self.rect.centery - self.offset)
-        #print(self.cur_posy)
+        self.cur_posy = 255 - self.rect.centery + self.offset
+        print(self.cur_posy)
 
 
     def set_center(self, posxy: tuple[int, int]) -> None:
         self.rect.center = posxy
+        self.offset = self.rect.centery - 255
+        self.miny = self.offset
+        self.maxy = self.rect.centery
 
 
     def draw(self, root_surf: pygame.Surface) -> None:
