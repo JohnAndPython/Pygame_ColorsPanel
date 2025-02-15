@@ -25,3 +25,17 @@ class Dot(pygame.sprite.Sprite):
         pygame.draw.circle(self.image, (0, 0, 0), (self.size + 5 // 2, self.size + 5 // 2), self.size - 5, width=1)
 
         root_surf.blit(self.image, self.rect)
+
+
+class slider(pygame.sprite.Sprite):
+    def __init__(self, posx: int, posy: int):
+        super().__init__()
+
+        self.posx = posx
+        self.posy = posy
+
+    def update(self) -> None:
+        pass
+
+    def draw(self, root_surf: pygame.Surface) -> None:
+        pass
