@@ -9,7 +9,7 @@ class Dot(pygame.sprite.Sprite):
         self.size = size
         self.color_outer = color_outer
         self.color_inner = color_inner
-        self.cur_posy = 0
+        self.value = 0
 
         self.image = pygame.surface.Surface((self.size * 2 + 5, self.size * 2 + 5), pygame.SRCALPHA)
         self.rect = self.image.get_rect(centerx=posx, centery=posy)
@@ -28,8 +28,7 @@ class Dot(pygame.sprite.Sprite):
         elif self.rect.centery > self.maxy:
             self.rect.centery = self.maxy
 
-        self.cur_posy = 255 - self.rect.centery + self.offset
-        print(self.cur_posy)
+        self.value = 255 - self.rect.centery + self.offset
 
 
     def set_center(self, posxy: tuple[int, int]) -> None:
