@@ -1,7 +1,7 @@
 import pygame
 import time, sys
 
-from panel import Dot
+from panel import Dot, slider
 
 pygame.init()
 
@@ -12,6 +12,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
 dot_red = Dot()
+slider_red = slider(100,10)
 
 #test
 
@@ -38,6 +39,7 @@ while True:
     screen.fill((255, 255, 255))
 
     dot_red.draw(screen)
+    slider_red.draw(screen)
 
 
     #update display
