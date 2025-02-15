@@ -4,48 +4,48 @@ class Dot(pygame.sprite.Sprite):
     def __init__(self, posx: int=0, posy: int=255, size: int=20, color_outer: tuple[int, int, int]=(0, 255, 250), color_inner: tuple[int, int, int]=(0, 0, 250)) -> None:
         super().__init__()
 
-        self.posx = posx
-        self.posy = posy
-        self.size = size
-        self.color_outer = color_outer
-        self.color_inner = color_inner
+        self.__posx = posx
+        self.__posy = posy
+        self.__size = size
+        self.__color_outer = color_outer
+        self.__color_inner = color_inner
         self.value = 0
 
-        self.image = pygame.surface.Surface((self.size * 2 + 5, self.size * 2 + 5), pygame.SRCALPHA)
-        self.rect = self.image.get_rect(centerx=posx, centery=posy)
+        self.__image = pygame.surface.Surface((self.__size * 2 + 5, self.__size * 2 + 5), pygame.SRCALPHA)
+        self.rect = self.__image.get_rect(centerx=self.__posx, centery=self.__posy)
 
-        self.offset = self.rect.centery - 255
-        self.miny = self.offset
-        self.maxy = self.rect.centery
+        self.__offset = self.rect.centery - 255
+        self.__miny = self.__offset
+        self.__maxy = self.rect.centery
 
-        assert self.posy >= 255, f"The Center of the Object must be >= 255. posy = {self.posy}"
+        assert self.__posy >= 255, f"The Center of the Object must be >= 255. posy = {self.__posy}"
 
     def update(self, posy: int) -> None:
         self.rect.centery = posy
 
-        if self.rect.centery < self.miny:
-            self.rect.centery = self.miny
-        elif self.rect.centery > self.maxy:
-            self.rect.centery = self.maxy
+        if self.rect.centery < self.__miny:
+            self.rect.centery = self.__miny
+        elif self.rect.centery > self.__maxy:
+            self.rect.centery = self.__maxy
 
-        self.value = 255 - self.rect.centery + self.offset
+        self.value = 255 - self.rect.centery + self.__offset
 
 
     def set_center(self, posxy: tuple[int, int]) -> None:
         self.rect.center = posxy
-        self.offset = self.rect.centery - 255
-        self.miny = self.offset
-        self.maxy = self.rect.centery
+        self.__offset = self.rect.centery - 255
+        self.__miny = self.__offset
+        self.__maxy = self.rect.centery
 
 
     def draw(self, root_surf: pygame.Surface) -> None:
         #self.image.fill((0, 0, 0, 0))
-        pygame.draw.circle(self.image, self.color_outer, (self.size + 5 // 2, self.size + 5 // 2), self.size)
-        pygame.draw.circle(self.image, (0, 0, 0), (self.size + 5 // 2, self.size + 5 // 2), self.size, width=1)
-        pygame.draw.circle(self.image, self.color_inner, (self.size + 5 // 2, self.size + 5 // 2), self.size - 5)
-        pygame.draw.circle(self.image, (0, 0, 0), (self.size + 5 // 2, self.size + 5 // 2), self.size - 5, width=1)
+        pygame.draw.circle(self.image, self.__color_outer, (self.__size + 5 // 2, self.__size + 5 // 2), self.__size)
+        pygame.draw.circle(self.image, (0, 0, 0), (self.__size + 5 // 2, self.__size + 5 // 2), self.__size, width=1)
+        pygame.draw.circle(self.image, self.__color_inner, (self.__size + 5 // 2, self.__size + 5 // 2), self.__size - 5)
+        pygame.draw.circle(self.image, (0, 0, 0), (self.__size + 5 // 2, self.__size + 5 // 2), self.__size - 5, width=1)
 
-        root_surf.blit(self.image, self.rect)
+        root_surf.blit(self.__image, self.rect)
 
 
 class Slider(pygame.sprite.Sprite):
