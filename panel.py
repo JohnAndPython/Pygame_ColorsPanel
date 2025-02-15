@@ -107,7 +107,7 @@ class Panel(pygame.sprite.Sprite):
         self.__color = color
 
         self.__image = pygame.surface.Surface((self.__sizex, self.__sizey), pygame.SRCALPHA)
-        self.rect = self.__image.get_rect(left=posx, top=self.__posy)
+        self.rect = self.__image.get_rect(left=self.__posx, top=self.__posy)
 
 
     def get_left_pos(self) -> int:
@@ -121,4 +121,5 @@ class Panel(pygame.sprite.Sprite):
     def draw(self, root_surf: pygame.Surface) -> None:
         self.__image.fill((0, 0, 0, 0))
         pygame.draw.rect(self.__image, self.__color, (0, 0, self.rect.width, self.rect.height), border_radius=10)
+        pygame.draw.rect(self.__image, (0, 0, 0), (0, 0, self.rect.width, self.rect.height), width=2, border_radius=10)
         root_surf.blit(self.__image, self.rect)
