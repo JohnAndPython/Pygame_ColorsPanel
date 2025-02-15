@@ -34,11 +34,12 @@ while True:
             sys.exit()
 
     # update
-    dot_red.update(mouse_pos[1])
+    #dot_red.update(mouse_pos[1])
+    slider_red.update(mouse_pos[1])
 
     screen.fill((255, 255, 255))
 
-    dot_red.draw(screen)
+    #dot_red.draw(screen)
     slider_red.draw(screen)
 
 
