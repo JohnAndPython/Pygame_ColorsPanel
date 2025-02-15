@@ -1,7 +1,7 @@
 import pygame
 import time, sys
 
-from panel import Dot, slider
+from panel import Dot, Slider, Panel
 
 pygame.init()
 
@@ -11,8 +11,19 @@ SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
-dot_red = Dot()
-slider_red = slider(100,10)
+
+main_panel = Panel(200, 20)
+
+
+surf_red = main_panel.get_dot_value(main_panel.get_sliders()[0])
+surf_green = surf_red = main_panel.get_dot_value(main_panel.get_sliders()[1])
+surf_blue = surf_red = main_panel.get_dot_value(main_panel.get_sliders()[2])
+
+print(surf_red, surf_green, surf_blue)
+
+surf_red = 255
+surf_blue = 255
+surf_green = 255
 
 #test
 
@@ -33,14 +44,33 @@ while True:
             pygame.quit()
             sys.exit()
 
+        
+
+
+
     # update
     #dot_red.update(mouse_pos[1])
-    slider_red.update(mouse_pos[1])
+    #slider_red.update(mouse_pos[1])
+    main_panel.update(mouse_pos[1])
 
-    screen.fill((255, 255, 255))
+    surf_red = main_panel.get_dot_value(main_panel.get_sliders()[0])
+    print(surf_red)
+
+    # surf_red -= 1
+    # if surf_red <= 0:
+    #     surf_red = 255
+
+    screen.fill((surf_red, surf_green, surf_blue))
+
+
+    # surf_green = surf_red = main_panel.get_dot_value(main_panel.get_sliders()[1])
+    # surf_blue = surf_red = main_panel.get_dot_value(main_panel.get_sliders()[2])
+    
+    
 
     #dot_red.draw(screen)
-    slider_red.draw(screen)
+    #slider_red.draw(screen)
+    main_panel.draw(screen)
 
 
     #update display
