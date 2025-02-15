@@ -29,27 +29,25 @@ dot_r.set_center(slider_r.get_bottom())
 dot_g.set_center(slider_g.get_bottom())
 dot_b.set_center(slider_b.get_bottom())
 
-print(dot_r.rect.center)
-
+# variables
 surf_red = 255
 surf_blue = 255
 surf_green = 255
 
-#test
-can_move = False
-#test end
-
+can_move_r = False
+can_move_g = False
+can_move_b = False
 
 prev_time = time.time()
 
 while True:
-    #delta time |alternative: dt = clock.tick(60) / 1000
+    # delta time |alternative: dt = clock.tick(60) / 1000
     dt = time.time() - prev_time
     prev_time = time.time()
     
     mouse_pos = pygame.mouse.get_pos()
 
-    #event loop
+    # event loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -58,27 +56,31 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if dot_r.rect.collidepoint(mouse_pos):
-                    can_move = True
+                    can_move_r = True
+                elif dot_g.rect.collidepoint(mouse_pos):
+                    can_move_g = True
+                elif dot_b.rect.collidepoint(mouse_pos):
+                    can_move_b = True
                     
 
         elif event.type == pygame.MOUSEBUTTONUP:
-            can_move = False
+            can_move_r = False
+            can_move_g = False
+            can_move_b = False
 
 
     
     # update
-    #dot_red.update(mouse_pos[1])
-    #slider_red.update(mouse_pos[1])
-    #main_panel.update(mouse_pos[1])
-    
-    if can_move:
+    if can_move_r:
         dot_r.update(mouse_pos[1])
+    elif can_move_g:
+        dot_g.update(mouse_pos[1])
+    elif can_move_b:
+        dot_b.update(mouse_pos[1])
     
-
+    # draw
     screen.fill((surf_red, surf_green, surf_blue))
 
-
-    #draw
     main_panel.draw(screen)
     slider_r.draw(screen)
     slider_g.draw(screen)
