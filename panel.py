@@ -39,11 +39,11 @@ class Dot(pygame.sprite.Sprite):
 
 
     def draw(self, root_surf: pygame.Surface) -> None:
-        #self.image.fill((0, 0, 0, 0))
-        pygame.draw.circle(self.image, self.__color_outer, (self.__size + 5 // 2, self.__size + 5 // 2), self.__size)
-        pygame.draw.circle(self.image, (0, 0, 0), (self.__size + 5 // 2, self.__size + 5 // 2), self.__size, width=1)
-        pygame.draw.circle(self.image, self.__color_inner, (self.__size + 5 // 2, self.__size + 5 // 2), self.__size - 5)
-        pygame.draw.circle(self.image, (0, 0, 0), (self.__size + 5 // 2, self.__size + 5 // 2), self.__size - 5, width=1)
+        self.image.fill((0, 0, 0, 0))
+        pygame.draw.circle(self.__image, self.__color_outer, (self.__size + 5 // 2, self.__size + 5 // 2), self.__size)
+        pygame.draw.circle(self.__image, (0, 0, 0), (self.__size + 5 // 2, self.__size + 5 // 2), self.__size, width=1)
+        pygame.draw.circle(self.__image, self.__color_inner, (self.__size + 5 // 2, self.__size + 5 // 2), self.__size - 5)
+        pygame.draw.circle(self.__image, (0, 0, 0), (self.__size + 5 // 2, self.__size + 5 // 2), self.__size - 5, width=1)
 
         root_surf.blit(self.__image, self.rect)
 
@@ -52,19 +52,19 @@ class Slider(pygame.sprite.Sprite):
     def __init__(self, posx: int=0, posy: int=0, width:int=20, height: int=255, color_slider: tuple[int, int, int]=(200, 200, 200)):
         super().__init__()
 
-        self.posx = posx
-        self.posy = posy
-        self.color_slider = color_slider
-        self.width = width 
-        self.height = height
+        self.__posx = posx
+        self.__posy = posy
+        self.__color_slider = color_slider
+        self.__width = width 
+        self.__height = height
 
-        self.offsetx = 10
-        self.offsety = 20
-        self.offset_inner = 4
+        self.__offsetx = 10
+        self.__offsety = 20
+        self.__offset_inner = 4
 
-        self.image = pygame.surface.Surface((self.width + self.offsetx * 2, self.height + 45), pygame.SRCALPHA)
-        self.rect = self.image.get_rect(left=self.posx, top=self.posy)
-        self.slider_rect = pygame.rect.Rect(self.offsetx, self.offsety, self.width, self.height)
+        self.__image = pygame.surface.Surface((self.__width + self.__offsetx * 2, self.__height + 45), pygame.SRCALPHA)
+        self.rect = self.__image.get_rect(left=self.__posx, top=self.__posy)
+        self.__slider_rect = pygame.rect.Rect(self.__offsetx, self.__offsety, self.__width, self.__height)
 
 
     def get_width(self) -> int:
@@ -76,11 +76,11 @@ class Slider(pygame.sprite.Sprite):
     
 
     def get_top(self) -> tuple[int, int]:
-        return (self.rect.midtop[0], self.rect.midtop[1] + self.offsety)
+        return (self.rect.midtop[0], self.rect.midtop[1] + self.__offsety)
         
 
     def get_bottom(self) -> tuple[int, int]:
-        return (self.rect.midtop[0], self.rect.midtop[1] + self.height + self.offsety)
+        return (self.rect.midtop[0], self.rect.midtop[1] + self.__height + self.__offsety)
     
     
     def set_topleft_position(self, posx: int, posy: int) -> None:
@@ -89,11 +89,11 @@ class Slider(pygame.sprite.Sprite):
 
 
     def draw(self, root_surf: pygame.Surface) -> None:
-        self.image.fill((0, 0, 0, 0))
-        pygame.draw.rect(self.image, self.color_slider, self.slider_rect, border_radius=10)
-        pygame.draw.rect(self.image, (0, 0, 0, 0), (self.offsetx + self.offset_inner, self.offsety + self.offset_inner, self.offsetx * 2 - 2 * self.offset_inner, self.height - self.offset_inner * 2), border_radius=10)
+        self.__image.fill((0, 0, 0, 0))
+        pygame.draw.rect(self.__image, self.__color_slider, self.__slider_rect, border_radius=10)
+        pygame.draw.rect(self.__image, (0, 0, 0, 0), (self.__offsetx + self.__offset_inner, self.__offsety + self.__offset_inner, self.__offsetx * 2 - 2 * self.__offset_inner, self.__height - self.__offset_inner * 2), border_radius=10)
 
-        root_surf.blit(self.image, self.rect)
+        root_surf.blit(self.__image, self.rect)
 
 
 class Panel(pygame.sprite.Sprite):
