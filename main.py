@@ -30,9 +30,9 @@ dot_g.set_center(slider_g.get_bottom())
 dot_b.set_center(slider_b.get_bottom())
 
 # variables
-surf_red = 255
-surf_blue = 255
-surf_green = 255
+surf_red = dot_r.value
+surf_green = dot_g.value
+surf_blue = dot_b.value
 
 can_move_r = False
 can_move_g = False
@@ -62,14 +62,12 @@ while True:
                 elif dot_b.rect.collidepoint(mouse_pos):
                     can_move_b = True
                     
-
         elif event.type == pygame.MOUSEBUTTONUP:
             can_move_r = False
             can_move_g = False
             can_move_b = False
 
 
-    
     # update
     if can_move_r:
         dot_r.update(mouse_pos[1])
@@ -77,6 +75,10 @@ while True:
         dot_g.update(mouse_pos[1])
     elif can_move_b:
         dot_b.update(mouse_pos[1])
+
+    surf_red = dot_r.value
+    surf_green = dot_g.value
+    surf_blue = dot_b.value
     
     # draw
     screen.fill((surf_red, surf_green, surf_blue))
@@ -88,11 +90,9 @@ while True:
     dot_r.draw(screen)
     dot_g.draw(screen)
     dot_b.draw(screen)
-    
 
-
-    #update display
+    # update display
     pygame.display.update()
 
-    #set max FPS to 60
+    # set max FPS to 60
     clock.tick(60)
