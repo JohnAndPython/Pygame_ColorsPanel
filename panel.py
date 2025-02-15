@@ -23,7 +23,7 @@ class Dot(pygame.sprite.Sprite):
         elif self.rect.centery > maxy:
             self.rect.centery = maxy
 
-        self.cur_posy = 255 - (self.rect.centery - self.offset)
+        self.cur_posy = 255 - (self.rect.centery)
         #print(self.cur_posy)
 
 
@@ -64,12 +64,15 @@ class Slider(pygame.sprite.Sprite):
         return self.rect.width
     
 
+    def get_right_pos(self) -> int:
+        return self.rect.right
+    
+
     def get_top(self) -> tuple[int, int]:
         return (self.rect.midtop[0], self.rect.midtop[1] + self.offsety)
         
 
     def get_bottom(self) -> tuple[int, int]:
-        print(self.slider_rect.midbottom[1] + self.offsety)
         return (self.rect.midtop[0], self.rect.midtop[1] + self.height + self.offsety)
     
     
@@ -81,63 +84,35 @@ class Slider(pygame.sprite.Sprite):
     def draw(self, root_surf: pygame.Surface) -> None:
         self.image.fill((0, 0, 0, 0))
         pygame.draw.rect(self.image, self.color_slider, self.slider_rect, border_radius=10)
-        pygame.draw.rect(self.image, (0, 0, 0, 0), (self.offsetx + self.offset_inner, self.offsety + self.offset_inner, self.offsetx * 2 - 2 * self.offset_inner, self.height - self.offsetx * 2), border_radius=10)
+        pygame.draw.rect(self.image, (0, 0, 0, 0), (self.offsetx + self.offset_inner, self.offsety + self.offset_inner, self.offsetx * 2 - 2 * self.offset_inner, self.height - self.offset_inner * 2), border_radius=10)
 
         root_surf.blit(self.image, self.rect)
 
 
-# class Panel(pygame.sprite.Sprite):
-#     def __init__(self, posx: int=0, posy: int=0, color: tuple[int, int, int]=(50, 200, 50)):
-#         super().__init__()
+class Panel(pygame.sprite.Sprite):
+    def __init__(self, posx: int=0, posy: int=0, sizex: int=100, sizey: int=100, color: tuple[int, int, int]=(50, 200, 50)):
+        super().__init__()
 
-#         self.posx = posx
-#         self.posy = posy
-#         self.color = color
+        self.posx = posx
+        self.posy = posy
+        self.sizex = sizex
+        self.sizey = sizey
+        self.color = color
 
-#         # slider initial position
-#         sliderposx = 20
-#         sliderposy = 0
-#         offset = 5
-
-#         self.slider_red = Slider(color_dot_outer=(250, 150, 0), color_dot_inner=(250, 0, 0))
-#         self.slider_green = Slider(color_dot_outer=(150, 250, 0), color_dot_inner=(0, 250, 0))
-#         self.slider_blue = Slider()
-        
-#         self.slider_red.set_position(sliderposx, sliderposy)
-#         self.slider_width = self.slider_red.get_width()
-#         self.slider_green.set_position(sliderposx + self.slider_width + offset, sliderposy)
-#         self.slider_blue.set_position(sliderposx + self.slider_width * 2 + offset * 2, sliderposy)
-
-#         self.slider_lst = (self.slider_red, self.slider_green, self.slider_blue)
-
-#         surf_width = sliderposx * 2 + self.slider_width * 3 + offset * 2
-#         surf_height = self.slider_red.get_height()
-
-#         self.image = pygame.surface.Surface((surf_width, surf_height), pygame.SRCALPHA)
-#         self.rect = self.image.get_rect(left=posx, top=self.posy)
-
-#     def update(self, posy: int) -> None:
-#         self.slider_red.update(posy)
+        self.image = pygame.surface.Surface((self.sizex, self.sizey), pygame.SRCALPHA)
+        self.rect = self.image.get_rect(left=posx, top=self.posy)
 
 
-#     def get_sliders(self) -> tuple[Slider, Slider, Slider]:
-#         return self.slider_lst
-
-#     def get_dot_value(self, slider: Slider) -> int:
-#         return slider.get_dot_positiony()
-    
-
-#     def get_dot_rect(self, slider: Slider) -> pygame.Rect:
-#         return slider.get_dot_rect()
+    def get_left_pos(self) -> int:
+        print(self.rect.left)
+        return self.rect.left
 
 
-#     def draw(self, root_surf: pygame.Surface) -> None:
-#         self.image.fill((0, 0, 0, 0))
-
-#         pygame.draw.rect(self.image, self.color, (0, 0, self.rect.width, self.rect.height), border_radius=10)
-#         self.slider_red.draw(self.image)
-#         self.slider_green.draw(self.image)
-#         self.slider_blue.draw(self.image)
+    def set_right_pos(self, pos_right: int) -> None:
+        self.rect.right = pos_right
 
 
-#         root_surf.blit(self.image, self.rect)
+    def draw(self, root_surf: pygame.Surface) -> None:
+        self.image.fill((0, 0, 0, 0))
+        pygame.draw.rect(self.image, self.color, (0, 0, self.rect.width, self.rect.height), border_radius=10)
+        root_surf.blit(self.image, self.rect)
