@@ -5,7 +5,7 @@ from panel import Dot, Slider, Panel
 
 pygame.init()
 
-SCREEN_WIDTH = 800
+SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 600
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
