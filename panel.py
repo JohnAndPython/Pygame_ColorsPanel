@@ -1,7 +1,7 @@
 import pygame
 
 class Dot(pygame.sprite.Sprite):
-    def __init__(self, posx: int=0, posy: int=0, size: int=20, color_outer: tuple[int, int, int]=(0, 255, 250), color_inner: tuple[int, int, int]=(0, 0, 250)) -> None:
+    def __init__(self, posx: int=0, posy: int=255, size: int=20, color_outer: tuple[int, int, int]=(0, 255, 250), color_inner: tuple[int, int, int]=(0, 0, 250)) -> None:
         super().__init__()
 
         self.posx = posx
@@ -14,6 +14,7 @@ class Dot(pygame.sprite.Sprite):
         self.image = pygame.surface.Surface((self.size * 2 + 5, self.size * 2 + 5), pygame.SRCALPHA)
         self.rect = self.image.get_rect(centerx=posx, centery=posy)
 
+        assert self.posy >= 255, f"The Center of the Object must be >= 255. posy = {self.posy}"
 
     def update(self, posy: int, miny: int=0, maxy: int=255) -> None:
         self.rect.centery = posy
@@ -23,7 +24,7 @@ class Dot(pygame.sprite.Sprite):
         elif self.rect.centery > maxy:
             self.rect.centery = maxy
 
-        self.cur_posy = 255 - (self.rect.centery)
+        self.cur_posy = 255 - (self.rect.centery - self.offset)
         #print(self.cur_posy)
 
 
@@ -104,7 +105,6 @@ class Panel(pygame.sprite.Sprite):
 
 
     def get_left_pos(self) -> int:
-        print(self.rect.left)
         return self.rect.left
 
 
